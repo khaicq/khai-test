@@ -1,0 +1,25 @@
+{
+    "directory": "./src/models",
+    "additional": {
+      "timestamps": true,
+      "createdAt": true,
+      "updatedAt": false,
+      "deletedAt": false
+    },
+    "username": "root",
+    "password": "",
+    "dialect": "mysql",
+    "port": 3308,
+    "host": "localhost",
+    "database": "khai_test",
+    "storage": "khai_test",
+    "tables": null,
+    "skipTables": [],
+    "lang": "ts",
+    "caseModel": "p",
+    "caseFile": "o",
+    "caseProp": "c",
+    "noWrite": false,
+    "views": false,
+    "singularize": false
+}
