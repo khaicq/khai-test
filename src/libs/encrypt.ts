@@ -1,4 +1,4 @@
-import { createHmac } from "node:crypto";
+import { createHmac } from "crypto";
 
 const encode = (str: string, key: string) => {
   const hmac = createHmac("sha256", key);
