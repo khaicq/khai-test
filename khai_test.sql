@@ -33,17 +33,17 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
   `typeId` int(11) NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_room_type` (`typeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Đang đổ dữ liệu cho bảng `rooms`
 --
 
-INSERT INTO `rooms` (`id`, `code`, `typeId`, `createdAt`) VALUES
-(1, ' req.body.code', 1, '2022-10-31 07:16:40');
+-- INSERT INTO `rooms` (`id`, `code`, `typeId`, `createdAt`) VALUES
+-- (1, ' req.body.code', 1, '2022-10-31 07:16:40');
 
 -- --------------------------------------------------------
 
@@ -56,16 +56,16 @@ CREATE TABLE IF NOT EXISTS `room_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `pricePerDay` int(11) NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Đang đổ dữ liệu cho bảng `room_types`
 --
 
-INSERT INTO `room_types` (`id`, `name`, `pricePerDay`, `createdAt`) VALUES
-(1, 'type room name', 10000, '2022-10-31 07:09:54');
+-- INSERT INTO `room_types` (`id`, `name`, `pricePerDay`, `createdAt`) VALUES
+-- (1, 'type room name', 10000, '2022-10-31 07:09:54');
 
 -- --------------------------------------------------------
 
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `picture` varchar(255) DEFAULT NULL,
   `typeId` int(11) NOT NULL,
   `createdBy` int(11) DEFAULT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`,`email`),
   KEY `fk_user_user_type` (`typeId`),
   KEY `fk_user_user` (`createdBy`)
@@ -113,19 +113,19 @@ CREATE TABLE IF NOT EXISTS `user_room` (
   `roomId` int(11) NOT NULL,
   `start` double NOT NULL,
   `end` double NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_to_room` (`roomId`),
   KEY `fk_to_user` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Đang đổ dữ liệu cho bảng `user_room`
 --
 
-INSERT INTO `user_room` (`id`, `userId`, `roomId`, `start`, `end`, `createdAt`) VALUES
-(3, 5, 1, 1667204121000, 1667290521000, '2022-10-31 08:24:31'),
-(4, 5, 1, 1667204121000, 1667290521000, '2022-10-31 08:24:33');
+-- INSERT INTO `user_room` (`id`, `userId`, `roomId`, `start`, `end`, `createdAt`) VALUES
+-- (3, 5, 1, 1667204121000, 1667290521000, '2022-10-31 08:24:31'),
+-- (4, 5, 1, 1667204121000, 1667290521000, '2022-10-31 08:24:33');
 
 -- --------------------------------------------------------
 
@@ -137,7 +137,7 @@ DROP TABLE IF EXISTS `user_types`;
 CREATE TABLE IF NOT EXISTS `user_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
