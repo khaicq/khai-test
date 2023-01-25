@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
 import { authenticateToken, adminVerify } from "../middlewares/index";
-
 import multer from "multer";
 import fs from "fs";
 

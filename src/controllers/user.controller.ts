@@ -71,8 +71,16 @@ export class UserController extends BaseController {
       if (req.query.name) {
         fillter.name = { [this._op.substring]: req.query.name };
       }
-      console.log(fillter);
       const data = await this._userRepository.getMany(fillter);
+      console.log(
+        "---------------",
+        this.getMaxNumber([
+          { name: "Cao Quang Khải", number: 1 },
+          { name: "Lê Thị Trang", number: 3 },
+          { name: "Mai Ngọc", number: 2 },
+        ])
+      );
+
       return res.status(200).send(data);
     } catch (err: any) {
       res.status(400).json({ message: err.message || "Default error" });
@@ -167,4 +175,19 @@ export class UserController extends BaseController {
       res.status(400).json({ message: err.message || "Unknown error" });
     }
   };
+  getMaxNumber = (data: any) => {
+    let max: any = null;
+    if (!data || !Array.isArray(data) || data.length == 0) {
+      return max;
+    }
+    data.forEach((element: any) => {
+      max = max && max.number > element.number ? max : element;
+    });
+    return max;
+  };
+  sum = (a: number, b: number) => {
+    return a + b;
+  };
+
+  
 }

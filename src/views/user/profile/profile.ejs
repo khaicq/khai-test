@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>profile</title>
+  </head>
+  <body>
+    <% if (user.id && user.name && user.email) { %>
+    <h1>Profile of user logged-in:</h1>
+    <table>
+      <tr>
+        <td colspan="2" style="text-align: center">
+          <img src="<%= user.photo %>" referrerpolicy="no-referrer" />
+        </td>
+      </tr>
+      <tr>
+        <td width="100px">id</td>
+        <td>: <%= user.id %></td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>: <%= user?.name?.familyName + user?.name?.givenName %></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>: <%= user?.email %></td>
+      </tr>
+    </table>
+    <% } %>
+
+    <br />
+    <a href="/api/auth/logout"> Logout</a>
+  </body>
+</html>

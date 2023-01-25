@@ -2,7 +2,7 @@ import express, { Express } from "express";
 import path from "path";
 
 const useStatic = (app: Express) => {
-  const folder = ["uploads"];
+  const folder = ["uploads", "views"];
   for (const item of folder) {
     app.use(
       item,
