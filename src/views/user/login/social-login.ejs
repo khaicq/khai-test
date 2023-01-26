@@ -4,11 +4,113 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
     <title>Social Login</title>
   </head>
-  <body>
-    <a href="/api/auth/facebook-login">Login With Facebook</a>
-    <hr />
-    <a href="/api/auth/google-login">Login With Google</a>
+  <body style="margin: 0">
+    <div
+      style="
+        display: block;
+        background: #dadada;
+        height: 100vh;
+        text-align: center;
+      "
+    >
+      <div
+        style="
+          position: absolute;
+          width: 400px;
+          display: inline-block;
+          top: 50%;
+          transform: translateX(-50%) translateY(-50%);
+          padding: 1rem;
+          background: #ffffff;
+          border-radius: 3px;
+        "
+      >
+        <h1 style="display: block; text-align: center">Login</h1>
+        <hr style="margin: 1rem 0 1rem 0" />
+        <form onsubmit="return false">
+          <div class="mb-3">
+            <input
+              id="email"
+              type="email"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder="Email Address"
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              id="password"
+              type="password"
+              class="form-control"
+              placeholder="Your Password"
+            />
+          </div>
+          <div class="col-auto">
+            <button
+              id="submit"
+              type="submit"
+              class="btn btn-success"
+              style="width: 100%"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+        <hr style="margin: 1rem 0 1rem 0" />
+        <div>
+          <div class="col-auto">
+            <a
+              href="/api/auth/facebook-login"
+              class="btn btn-primary block mb-3"
+              style="width: 100%"
+              >Login With Facebook</a
+            >
+          </div>
+          <div class="col-auto">
+            <a
+              href="/api/auth/google-login"
+              class="btn btn-secondary block"
+              style="width: 100%"
+              >Login With Google</a
+            >
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
   </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+    $("#submit").click(() => {
+      console.log("!!!!");
+      const data = {
+        email: $("#email").val(),
+        password: $("#password").val(),
+      };
+      $.ajax({
+        type: "post",
+        url: "/api/auth/login",
+        data,
+        success: (res) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err.responseJSON);
+        },
+      });
+    });
+  </script>
 </html>

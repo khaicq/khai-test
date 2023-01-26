@@ -1,5 +1,6 @@
 import FacebookStrategy from "passport-facebook";
 import GoogleStrategy from "passport-google-oauth20";
+import { UserController } from "../controllers/user.controller";
 import { environment } from "../environments/environment";
 
 const PassportLib = (passport) => {
@@ -22,8 +23,13 @@ const PassportLib = (passport) => {
       },
       (accessToken, refreshToken, profile, done) => {
         process.nextTick(function () {
-          // userRepo.getOne({username: })
-          console.log("---login successful---");
+          const userController = new UserController();
+          userController.socialLoginHandler("FACEBOOK", profile).then(
+            (res) => {},
+            (err) => {
+              console.log({ err });
+            }
+          );
           return done(null, profile);
         });
       }
@@ -38,8 +44,16 @@ const PassportLib = (passport) => {
         callbackURL: environment.googleAuth.callback_url,
       },
       (accessToken, refreshToken, profile, done) => {
-        console.log("---login successful---");
-        done(null, profile);
+        process.nextTick(function () {
+          const userController = new UserController();
+          userController.socialLoginHandler("FACEBOOK", profile).then(
+            (res) => {},
+            (err) => {
+              console.log({ err });
+            }
+          );
+          done(null, profile);
+        });
       }
     )
   );

@@ -10,7 +10,7 @@ const route = Router();
 const PublicRoutes = (app: Router) => {
   app.use("/", route);
 
-  route.get("/social-login", notAuthenticated, (req, res) => {
+  route.get("/login", notAuthenticated, (req, res) => {
     res.render("user/login/social-login");
   });
   route.get("/profile", isAuthenticated, (req, res) => {

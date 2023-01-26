@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { AuthControlller } from "../controllers/auth.controller";
 import passport from "passport";
+import { loginValidation } from "../middlewares";
 
 const router = Router();
 const AuthRoutes = (app: Router) => {
   const auth = new AuthControlller();
   app.use("/auth", router);
-  router.post("/login", auth.login);
+  router.post("/login", loginValidation, auth.login);
 
   router.get(
     "/facebook-login",
@@ -39,7 +40,7 @@ const AuthRoutes = (app: Router) => {
   router.get("/logout", (req, res) => {
     req.logout(() => {
       console.log("User has been logout");
-      res.redirect("/social-login");
+      res.redirect("/login");
     });
   });
 };

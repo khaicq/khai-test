@@ -3,7 +3,8 @@ import { Request, Response } from "express";
 import { encode } from "../libs/encrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { environment } from "../environments/environment";
-// import jwt f
+import { signJwt } from "../libs/jwt";
+import config from "config";
 
 export class AuthControlller extends BaseController {
   login = async (req: Request, res: Response) => {
@@ -18,18 +19,32 @@ export class AuthControlller extends BaseController {
       return res.status(400).send({ message: "Invalid username password" });
     }
     res.status(200).send({
-      token: jsonwebtoken.sign(
+      access_token: signJwt(
         {
           id: existedUSer.id,
           email: existedUSer.email,
           name: existedUSer.name,
           picture: existedUSer.picture,
-          userType: existedUSer.type,
+          role: existedUSer.role,
           phoneNumber: existedUSer.phoneNumber,
         },
-        environment.token_secret,
+        "accessTokenPrivateKey",
         {
-          expiresIn: 60 * 60,
+          expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
+        }
+      ),
+      refresh_token: signJwt(
+        {
+          id: existedUSer.id,
+          email: existedUSer.email,
+          name: existedUSer.name,
+          picture: existedUSer.picture,
+          role: existedUSer.role,
+          phoneNumber: existedUSer.phoneNumber,
+        },
+        "refreshTokenPrivateKey",
+        {
+          expiresIn: `${config.get<number>("refreshTokenExpiresIn")}m`,
         }
       ),
     });

@@ -1,64 +1,46 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { UserRoom, UserRoomId } from './user_room';
-import type { UserTypes, UserTypesId } from './user_types';
+import type { Roles, RolesId } from './roles';
 
 export interface UsersAttributes {
   id: number;
   name: string;
-  number: string;
   email: string;
-  password: string;
+  password?: string;
   phoneNumber?: string;
   birthday?: number;
   address?: string;
   picture?: string;
-  typeId: number;
-  createdBy?: number;
+  roleId: number;
+  googleId?: string;
+  facebookId?: string;
   createdAt: Date;
 }
 
-export type UsersPk = "id" | "email";
+export type UsersPk = "id";
 export type UsersId = Users[UsersPk];
-export type UsersOptionalAttributes = "id" | "phoneNumber" | "birthday" | "address" | "picture" | "createdBy" | "createdAt";
+export type UsersOptionalAttributes = "id" | "password" | "phoneNumber" | "birthday" | "address" | "picture" | "googleId" | "facebookId" | "createdAt";
 export type UsersCreationAttributes = Optional<UsersAttributes, UsersOptionalAttributes>;
 
 export class Users extends Model<UsersAttributes, UsersCreationAttributes> implements UsersAttributes {
   id!: number;
   name!: string;
-  number!: string;
   email!: string;
-  password!: string;
+  password?: string;
   phoneNumber?: string;
   birthday?: number;
   address?: string;
   picture?: string;
-  typeId!: number;
-  createdBy?: number;
+  roleId!: number;
+  googleId?: string;
+  facebookId?: string;
   createdAt!: Date;
 
-  // Users belongsTo UserTypes via typeId
-  type!: UserTypes;
-  getType!: Sequelize.BelongsToGetAssociationMixin<UserTypes>;
-  setType!: Sequelize.BelongsToSetAssociationMixin<UserTypes, UserTypesId>;
-  createType!: Sequelize.BelongsToCreateAssociationMixin<UserTypes>;
-  // Users hasMany UserRoom via userId
-  userRooms!: UserRoom[];
-  getUserRooms!: Sequelize.HasManyGetAssociationsMixin<UserRoom>;
-  setUserRooms!: Sequelize.HasManySetAssociationsMixin<UserRoom, UserRoomId>;
-  addUserRoom!: Sequelize.HasManyAddAssociationMixin<UserRoom, UserRoomId>;
-  addUserRooms!: Sequelize.HasManyAddAssociationsMixin<UserRoom, UserRoomId>;
-  createUserRoom!: Sequelize.HasManyCreateAssociationMixin<UserRoom>;
-  removeUserRoom!: Sequelize.HasManyRemoveAssociationMixin<UserRoom, UserRoomId>;
-  removeUserRooms!: Sequelize.HasManyRemoveAssociationsMixin<UserRoom, UserRoomId>;
-  hasUserRoom!: Sequelize.HasManyHasAssociationMixin<UserRoom, UserRoomId>;
-  hasUserRooms!: Sequelize.HasManyHasAssociationsMixin<UserRoom, UserRoomId>;
-  countUserRooms!: Sequelize.HasManyCountAssociationsMixin;
-  // Users belongsTo Users via createdBy
-  createdByUser!: Users;
-  getCreatedByUser!: Sequelize.BelongsToGetAssociationMixin<Users>;
-  setCreatedByUser!: Sequelize.BelongsToSetAssociationMixin<Users, UsersId>;
-  createCreatedByUser!: Sequelize.BelongsToCreateAssociationMixin<Users>;
+  // Users belongsTo Roles via roleId
+  role!: Roles;
+  getRole!: Sequelize.BelongsToGetAssociationMixin<Roles>;
+  setRole!: Sequelize.BelongsToSetAssociationMixin<Roles, RolesId>;
+  createRole!: Sequelize.BelongsToCreateAssociationMixin<Roles>;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Users {
     return Users.init({
@@ -72,18 +54,13 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    number: {
-      type: DataTypes.STRING(225),
-      allowNull: false
-    },
     email: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     phoneNumber: {
       type: DataTypes.STRING(255),
@@ -101,21 +78,21 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    typeId: {
+    roleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'user_types',
+        model: 'roles',
         key: 'id'
       }
     },
-    createdBy: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
+    googleId: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    facebookId: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -136,21 +113,13 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
         using: "BTREE",
         fields: [
           { name: "id" },
-          { name: "email" },
         ]
       },
       {
-        name: "fk_user_user_type",
+        name: "fk_user_role",
         using: "BTREE",
         fields: [
-          { name: "typeId" },
-        ]
-      },
-      {
-        name: "fk_user_user",
-        using: "BTREE",
-        fields: [
-          { name: "createdBy" },
+          { name: "roleId" },
         ]
       },
     ]

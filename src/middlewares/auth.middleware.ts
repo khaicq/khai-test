@@ -18,3 +18,10 @@ export function authenticateToken(req: Request, res: Response, next: any) {
     }
   );
 }
+
+export function loginValidation(req: Request, res: Response, next: any) {
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).json({ message: "Email/Password isn't empty" });
+  }
+  next();
+}

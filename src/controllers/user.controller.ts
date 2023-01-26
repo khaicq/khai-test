@@ -21,7 +21,7 @@ export class UserController extends BaseController {
         password: encode(req.body.password, req.body.email),
         name: req.body.name,
         number: req.body.number,
-        typeId: USER_TYPE.USER_CODE,
+        roleId: USER_TYPE.USER_CODE,
         address: req.body.address,
         birthday: req.body.birthday,
         phoneNumber: req.body.phoneNumber,
@@ -48,7 +48,7 @@ export class UserController extends BaseController {
         password: encode(req.body.password, req.body.email),
         name: req.body.name,
         number: req.body.name,
-        typeId: USER_TYPE.ADMIN_CODE,
+        roleId: USER_TYPE.ADMIN_CODE,
       };
 
       await this._userRepository.create(newUser);
@@ -189,5 +189,25 @@ export class UserController extends BaseController {
     return a + b;
   };
 
-  
+  socialLoginHandler = async (social, dataProfile) => {
+    console.log({ dataProfile });
+    let user;
+    if (social == "FACEBOOK") {
+      user = await this._userRepository.getOne({ facebookId: dataProfile.id });
+    } else if (social == "GOOGLE") {
+      user = await this._userRepository.getOne({ googleId: dataProfile.id });
+    }
+    if (user) {
+      return user;
+    }
+    let newUser = {
+      email: dataProfile?.emails && dataProfile?.emails[0].value,
+      name: `${dataProfile?.name?.familyName} ${dataProfile?.name?.givenName}`.trim(),
+      picture: dataProfile?.photos && dataProfile?.photos[0].value,
+      facebookId: social == "FACEBOOK" ? dataProfile?.id : null,
+      googleId: social == "GOOGLE" ? dataProfile?.id : null,
+      roleId: USER_TYPE.USER_CODE,
+    };
+    return await this._userRepository.create(newUser);
+  };
 }

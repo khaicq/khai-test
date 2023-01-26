@@ -1,14 +1,14 @@
 import { WhereOptions } from "sequelize";
-import { UserTypes, UserTypesAttributes } from "../models/user_types";
+import { Roles, RolesAttributes } from "../models/roles";
 import BaseRepository from "./base.repository";
 
-type Query = WhereOptions<UserTypesAttributes> | undefined;
+type Query = WhereOptions<RolesAttributes> | undefined;
 
 class UserTypeRepository extends BaseRepository {
-  _model: typeof UserTypes;
+  _model: typeof Roles;
   constructor() {
     super();
-    this._model = this._models.UserTypes;
+    this._model = this._models.Roles;
   }
 
   getOne(query: Query) {
