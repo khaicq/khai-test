@@ -18,7 +18,7 @@ const AuthRoutes = (app: Router) => {
   router.get(
     "/facebook/callback",
     passport.authenticate("facebook", {
-      successRedirect: "/profile",
+      successRedirect: "/",
       failureRedirect: "/log-in-failed",
     })
   );
@@ -32,7 +32,7 @@ const AuthRoutes = (app: Router) => {
   router.get(
     "/google/callback",
     passport.authenticate("google", {
-      successRedirect: "/profile",
+      successRedirect: "/",
       failureRedirect: "/log-in-failed",
     })
   );

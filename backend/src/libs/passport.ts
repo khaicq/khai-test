@@ -41,7 +41,6 @@ const PassportLib = (passport) => {
               console.log({ err });
             }
           );
-          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         });
       }
     )
@@ -74,7 +73,6 @@ const PassportLib = (passport) => {
               console.log({ err });
             }
           );
-          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         });
       }
     )

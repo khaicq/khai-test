@@ -33,7 +33,7 @@ class UserRepository extends BaseRepository {
       where: query,
       include: [
         {
-          association: this._models.Users.associations.type,
+          association: this._models.Users.associations.role,
           attributes: ["id", "name"],
         },
       ],

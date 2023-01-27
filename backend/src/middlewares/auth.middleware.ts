@@ -4,7 +4,6 @@ import jsonwebtoken from "jsonwebtoken";
 import { environment } from "../environments/environment";
 import { verifyJwt } from "../libs/jwt";
 export function authenticateToken(req: Request, res: Response, next: any) {
-  console.log("!!!!", req.isAuthenticated());
   if (req.isAuthenticated()) {
     req.body.userLoggedIn = req.user;
     return next();
