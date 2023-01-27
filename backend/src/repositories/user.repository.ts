@@ -48,7 +48,7 @@ class UserRepository extends BaseRepository {
     return this._model.findOne({
       where: query,
       attributes: { exclude: ["password"] },
-      include: [{ association: this._models.Users.associations.type }],
+      include: [{ association: this._models.Users.associations.role }],
     });
   }
 

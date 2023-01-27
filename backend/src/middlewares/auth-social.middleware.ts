@@ -4,7 +4,7 @@ function isAuthenticated(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect("/social-login");
+  res.redirect("/login");
 }
 
 function notAuthenticated(req: Request, res: Response, next: NextFunction) {

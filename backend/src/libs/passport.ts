@@ -25,12 +25,23 @@ const PassportLib = (passport) => {
         process.nextTick(function () {
           const userController = new UserController();
           userController.socialLoginHandler("FACEBOOK", profile).then(
-            (res) => {},
+            (res) => {
+              console.log(res);
+              const user = {
+                id: res.id,
+                name: res.name,
+                email: res.email,
+                photo: res.picture,
+                facebookId: res.facebookId,
+                googleId: res.googleId,
+              };
+              done(null, user);
+            },
             (err) => {
               console.log({ err });
             }
           );
-          return done(null, profile);
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         });
       }
     )
@@ -47,12 +58,23 @@ const PassportLib = (passport) => {
         process.nextTick(function () {
           const userController = new UserController();
           userController.socialLoginHandler("FACEBOOK", profile).then(
-            (res) => {},
+            (res) => {
+              const user = {
+                id: res.id,
+                name: res.name,
+                email: res.email,
+                photo: res.picture,
+                facebookId: res.facebookId,
+                googleId: res.googleId,
+              };
+              console.log(user);
+              done(null, user);
+            },
             (err) => {
               console.log({ err });
             }
           );
-          done(null, profile);
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         });
       }
     )

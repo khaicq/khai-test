@@ -2,21 +2,27 @@ import { Request, Response } from "express";
 
 import jsonwebtoken from "jsonwebtoken";
 import { environment } from "../environments/environment";
+import { verifyJwt } from "../libs/jwt";
 export function authenticateToken(req: Request, res: Response, next: any) {
+  console.log("!!!!", req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    req.body.userLoggedIn = req.user;
+    return next();
+  }
+
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) {
     return res.sendStatus(401);
   }
-  jsonwebtoken.verify(
-    token,
-    environment.token_secret as string,
-    (err, user: any) => {
-      if (err) return res.sendStatus(403);
-      req.body.userLoggedIn = user;
-      next();
-    }
-  );
+  try {
+    const user = verifyJwt(token, "accessTokenPrivateKey");
+    console.log(user);
+    req.body.userLoggedIn = user;
+    next();
+  } catch (err) {
+    return res.sendStatus(401);
+  }
 }
 
 export function loginValidation(req: Request, res: Response, next: any) {
