@@ -32,4 +32,5 @@ export const environment = {
     google_api_secret: "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",
     callback_url: "http://localhost:3333/api/auth/google/callback",
   },
+  clientUrl: "http://localhost:3000",
 };

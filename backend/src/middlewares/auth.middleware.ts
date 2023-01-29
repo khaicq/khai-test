@@ -15,12 +15,11 @@ export function authenticateToken(req: Request, res: Response, next: any) {
     return res.sendStatus(401);
   }
   try {
-    const user = verifyJwt(token, "accessTokenPrivateKey");
-    console.log(user);
+    const user = verifyJwt(token, "accessTokenPublicKey");
     req.body.userLoggedIn = user;
     next();
-  } catch (err) {
-    return res.sendStatus(401);
+  } catch (err: any) {
+    return res.status(401).json({ message: err.message });
   }
 }
 

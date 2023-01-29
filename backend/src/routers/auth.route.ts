@@ -2,12 +2,14 @@ import { Router } from "express";
 import { AuthControlller } from "../controllers/auth.controller";
 import passport from "passport";
 import { loginValidation } from "../middlewares";
+import { environment } from "../environments/environment";
 
 const router = Router();
 const AuthRoutes = (app: Router) => {
   const auth = new AuthControlller();
   app.use("/auth", router);
   router.post("/login", loginValidation, auth.login);
+  router.get("/refresh", auth.refreshToken);
 
   router.get(
     "/facebook-login",
@@ -18,7 +20,7 @@ const AuthRoutes = (app: Router) => {
   router.get(
     "/facebook/callback",
     passport.authenticate("facebook", {
-      successRedirect: "/",
+      successRedirect: environment.clientUrl + "/home?",
       failureRedirect: "/log-in-failed",
     })
   );
@@ -32,7 +34,7 @@ const AuthRoutes = (app: Router) => {
   router.get(
     "/google/callback",
     passport.authenticate("google", {
-      successRedirect: "/",
+      successRedirect: environment.clientUrl + "/home?",
       failureRedirect: "/log-in-failed",
     })
   );
@@ -40,7 +42,7 @@ const AuthRoutes = (app: Router) => {
   router.get("/logout", (req, res) => {
     req.logout(() => {
       console.log("User has been logout");
-      res.redirect("/login");
+      res.status(200).json();
     });
   });
 };
