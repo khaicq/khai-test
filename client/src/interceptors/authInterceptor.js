@@ -40,6 +40,10 @@ export const AuthInterceptor = () => {
             localStorage.setItem("access_token", res.access_token);
           });
       }
+      if (response.status === 401 && refresh) {
+        window.location.href = "/login";
+        return;
+      }
       return response;
     },
 

@@ -3,6 +3,7 @@ import LoginComponent from "./components/login/login.component";
 import HomeComponent from "./components/home/home.component";
 import HeaderComponent from "./components/header/header.component";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import ProfileComponent from "./components/profile/profile.component";
 
 function App() {
   return (
@@ -16,11 +17,16 @@ function App() {
           </Route>
           <Route path="/">
             <HeaderComponent />
-            <Switch>
-              <Route path="/home">
-                <HomeComponent />
-              </Route>
-            </Switch>
+            <BrowserRouter>
+              <Switch>
+                <Route path="/home">
+                  <HomeComponent />
+                </Route>
+                <Route path="/profile">
+                  <ProfileComponent />
+                </Route>
+              </Switch>
+            </BrowserRouter>
           </Route>
         </Switch>
       </BrowserRouter>

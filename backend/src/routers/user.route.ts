@@ -1,27 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
 import { authenticateToken, adminVerify } from "../middlewares/index";
-import multer from "multer";
-import fs from "fs";
-
-const storage = multer.diskStorage({
-  destination: function (req: any, _file: any, cb: any) {
-    if (!fs.existsSync("./uploads")) {
-      fs.mkdirSync("./uploads");
-    }
-    if (!fs.existsSync("./uploads/tmp")) {
-      fs.mkdirSync("./uploads/tmp");
-    }
-    cb(null, "uploads/tmp");
-  },
-  filename: function (_req: any, file: any, cb: any) {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({
-  storage: storage,
-});
+import upload from "../libs/multer";
 
 const router = Router();
 
@@ -37,6 +17,12 @@ const UserRoutes = (app: Router) => {
   router.post("/update", authenticateToken, user.updateDetail);
   router.post("/update-password", authenticateToken, user.updatePassword);
   router.delete("/delete/:id", authenticateToken, adminVerify, user.remove);
+  router.post(
+    "/upload-picture",
+    authenticateToken,
+    upload.single("picture"),
+    user.uploadFile
+  );
 };
 
 export default UserRoutes;

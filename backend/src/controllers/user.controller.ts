@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { RESPONSE, USER_TYPE } from "../contants/contants";
+import cloudinary from "../libs/cloudinary";
 import { encode } from "../libs/encrypt";
 import UserRepository from "../repositories/user.repository";
 import { BaseController } from "./base.controller";
@@ -170,7 +171,15 @@ export class UserController extends BaseController {
 
   uploadFile = async (req: any, res: Response) => {
     try {
-      console.log(req.file);
+      console.log(req.file, req.body.id);
+      const result = await cloudinary.v2.uploader.upload(req.file.path, {
+        folder: "samples",
+      });
+      await this._userRepository.update(
+        { picture: result.url },
+        { id: req.body.id }
+      );
+      res.status(200).json(result);
     } catch (err: any) {
       res.status(400).json({ message: err.message || "Unknown error" });
     }

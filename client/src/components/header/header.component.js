@@ -6,7 +6,7 @@ import NavItem from "react-bootstrap/NavItem";
 import NavLink from "react-bootstrap/NavLink";
 import { Link } from "react-router-dom";
 import { AuthInterceptor } from "../../interceptors/authInterceptor";
-import axios from "../../api/axios";
+
 export default class HeaderComponent extends Component {
   constructor(props) {
     super(props);

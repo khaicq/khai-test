@@ -19,8 +19,6 @@ export class AuthControlller extends BaseController {
         return res.status(400).send({ message: "Invalid username password" });
       }
 
-      console.log({ cookies: req.cookies });
-
       const refresh_token = signJwt(
         {
           id: existedUSer.id,
